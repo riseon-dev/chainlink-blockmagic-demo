@@ -1,0 +1,22 @@
+{
+  "name": "chainlink-demo",
+  "version": "1.0.0",
+  "description": "Haru repository for Chainlink demo",
+  "scripts": {
+    "test": "echo \"Hello World\""
+  },
+  "keywords": [],
+  "author": "Abdulla Faraz",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "turbo": "1.13.3"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "contributors": [{
+    "name": "Abdulla Faraz",
+    "email": "abdulla.faraz@gmail.com"
+  }]
+}

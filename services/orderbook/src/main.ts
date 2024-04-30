@@ -22,7 +22,6 @@ async function bootstrap() {
   const port = config.getOrThrow<number>('ORDERBOOK_PORT');
   const grpcPort = config.getOrThrow<string>('ORDERBOOK_GRPC_PORT');
   const protoPath = join(resolve(), './api/orderbook.proto');
-  logger.log(`proto path ${protoPath}`);
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,

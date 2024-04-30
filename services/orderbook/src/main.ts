@@ -5,6 +5,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ORDERBOOK_API_PACKAGE_NAME } from './__generated__/orderbook';
 import { join, resolve } from 'path';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 @Module({
   imports: [ConfigModule.forRoot({}), AppWithoutConfigModule],
@@ -16,7 +20,10 @@ export class AppModule {}
 async function bootstrap() {
   const logger = new Logger('bootstrap()');
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  );
 
   const config = app.get<ConfigService>(ConfigService);
   const port = config.getOrThrow<number>('ORDERBOOK_PORT');

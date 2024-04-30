@@ -1,14 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import {
+  CancelOrderRequest,
+  CancelOrderResponse,
+  PlaceOrderRequest,
+  PlaceOrderResponse,
+} from '../__generated__/orderbook';
 
 @Injectable()
 export class OrdersWorkfow {
+  private logger: Logger = new Logger(OrdersWorkfow.name);
   constructor() {}
 
-  placeOrder() {
-    return 'order placed';
+  placeOrder(request: PlaceOrderRequest): Promise<PlaceOrderResponse> {
+    this.logger.debug(request);
+    return Promise.resolve({ orderId: '123' });
   }
 
-  cancelOrder() {
-    return 'order cancelled';
+  cancelOrder(request: CancelOrderRequest): Promise<CancelOrderResponse> {
+    this.logger.debug(request);
+    return Promise.resolve({ success: true });
   }
 }

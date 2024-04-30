@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package orderbook_api;
+
+enum OrderSide {
+  SIDE_UNSPECIFIED = 0;
+  SIDE_BUY = 1;
+  SIDE_SELL = 2;
+}
+
+enum OrderType {
+  TYPE_UNSPECIFIED = 0;
+  TYPE_LIMIT = 1;
+  TYPE_MARKET = 2;
+//  TYPE_STOP = 3;
+//  TYPE_STOP_LIMIT = 4;
+//  TYPE_TAKE_PROFIT = 5;
+//  TYPE_TAKE_PROFIT_LIMIT = 6;
+//  TYPE_LIMIT_MAKER = 7;
+}
+
+message PlaceOrderRequest {
+  string symbol = 1;
+  OrderSide side = 2;
+  OrderType orderType = 3;
+  string quantity = 4;
+  optional string price = 5;
+}
+
+message PlaceOrderResponse {
+  string orderId = 1;
+}
+
+message CancelOrderRequest {
+  string orderId = 1;
+  string symbol = 2;
+}
+
+message CancelOrderResponse {
+  bool success = 1;
+}
+
+service OrderbookService {
+  rpc PlaceOrder(PlaceOrderRequest) returns (PlaceOrderResponse);
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+}

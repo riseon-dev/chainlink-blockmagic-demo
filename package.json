@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "Haru repository for Chainlink demo",
   "scripts": {
-    "test": "echo \"Hello World\""
+    "build": "turbo build",
+    "start": "turbo start",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "test:cov": "turbo test:cov"
   },
   "keywords": [],
   "author": "Abdulla Faraz",

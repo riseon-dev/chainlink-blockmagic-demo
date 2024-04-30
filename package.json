@@ -8,20 +8,28 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo test",
-    "test:cov": "turbo test:cov"
+    "test:cov": "turbo test:cov",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "Abdulla Faraz",
   "license": "GPL-3.0",
   "devDependencies": {
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
     "turbo": "1.13.3"
+  },
+  "lint-staged": {
+    "*.{js, jsx,ts,tsx}": ["turbo lint"]
   },
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
   },
-  "contributors": [{
-    "name": "Abdulla Faraz",
-    "email": "abdulla.faraz@gmail.com"
-  }]
+  "contributors": [
+    {
+      "name": "Abdulla Faraz",
+      "email": "abdulla.faraz@gmail.com"
+    }
+  ]
 }

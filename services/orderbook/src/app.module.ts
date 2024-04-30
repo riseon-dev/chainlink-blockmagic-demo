@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { WebControllersModule } from './infra/ports/web/web-controllers.module';
 
 @Module({
-  imports: [],
-  providers: [AppService],
-  controllers: [AppController],
+  imports: [WebControllersModule],
+  providers: [],
+  controllers: [],
 })
 export class AppWithoutConfigModule {}

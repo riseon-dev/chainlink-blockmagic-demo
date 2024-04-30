@@ -2,7 +2,7 @@
   "name": "recon-service",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Abdulla Faraz <abdulla.faraz@gmail.com>",
   "private": true,
   "license": "GPL-3.0",
   "scripts": {

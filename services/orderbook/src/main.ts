@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppWithoutConfigModule } from './app.module';
-import { Logger, Module } from '@nestjs/common';
+import { Logger, Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ORDERBOOK_API_PACKAGE_NAME } from './__generated__/orderbook';
@@ -42,6 +42,7 @@ async function bootstrap() {
     },
   });
 
+  app.useGlobalPipes(new ValidationPipe());
   app.enableShutdownHooks();
 
   logger.log(`Starting GRPC endpoint [${grpcPort}]...`);

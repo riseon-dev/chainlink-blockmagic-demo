@@ -1,8 +1,16 @@
 import { Heap } from 'heap-js';
+import {
+  EventType,
+  TradeEvent,
+  Event,
+  OrderFilledEvent,
+  OrderOpenedEvent,
+  OrderCanceledEvent,
+} from './events';
 
 export enum OrderSide {
-  BUY = 'buy',
-  SELL = 'sell',
+  BUY = 'BUY',
+  SELL = 'SELL',
 }
 
 export interface Order {
@@ -27,6 +35,7 @@ export class Orderbook {
   constructor(
     public readonly base: string,
     public readonly quote: string,
+    private emitEvent: (eventType: EventType, event: Event) => void,
   ) {
     this.symbol = `${base}/${quote}`;
     const asksComparator = (a: Order, b: Order) => a.price - b.price;
@@ -73,6 +82,50 @@ export class Orderbook {
     return side === OrderSide.BUY ? this.bid_queue : this.ask_queue;
   }
 
+  private emitTradeEvent(
+    order: Order,
+    tradePrice: number,
+    tradeQuantity: number,
+  ): void {
+    this.emitEvent(
+      EventType.TRADE,
+      new TradeEvent(
+        order.orderId,
+        Date.now(),
+        order.side,
+        tradePrice,
+        tradeQuantity,
+      ),
+    );
+  }
+
+  private emitOrderOpenedEvent(order: Order): void {
+    this.emitEvent(
+      EventType.ORDER_OPENED,
+      new OrderOpenedEvent(
+        order.orderId,
+        Date.now(),
+        order.side,
+        order.price,
+        order.quantity,
+      ),
+    );
+  }
+
+  private emitOrderCanceledEvent(order: Order): void {
+    this.emitEvent(
+      EventType.ORDER_CANCELED,
+      new OrderCanceledEvent(order.orderId, Date.now()),
+    );
+  }
+
+  private emitOrderFilledEvent(order: Order): void {
+    this.emitEvent(
+      EventType.ORDER_FILLED,
+      new OrderFilledEvent(order.orderId, Date.now()),
+    );
+  }
+
   private addOrderToBook(order: Order): void {
     const book = this.getBook(order.side);
     const volumeMap = this.getVolumeMap(order.side);
@@ -99,10 +152,10 @@ export class Orderbook {
     const queueMap = this.getQueueMap(order.side);
 
     const orderArray = queueMap.get(order.price);
-    if (!orderArray) throw new Error('order not found in queue');
+    if (!orderArray) throw new Error('Order not found in queue');
 
     const index = orderArray.findIndex((o) => o.orderId === order.orderId);
-    if (index === -1) throw new Error('order not found in queue');
+    if (index === -1) throw new Error('Order not found in queue');
 
     const removedOrder = orderArray.splice(index, 1)[0];
     const value = volumeMap.get(removedOrder.price) ?? 0;
@@ -125,7 +178,6 @@ export class Orderbook {
     this.orders.set(order.orderId, order);
 
     while (oppositeBook.size() > 0 && toFill !== 0) {
-      // this should not be a while loop
       const otherOrder = oppositeBook.peek();
       if (!otherOrder) break;
       if (otherOrder.price > order.price) break;
@@ -135,20 +187,18 @@ export class Orderbook {
       otherOrder.quantity -= tradeQuantity;
       order.quantity -= tradeQuantity;
       toFill -= tradeQuantity;
-      console.log(
-        `order filled tradePrice: ${tradePrice}, tradeQuantity: ${tradeQuantity}`,
-      );
-      // TODO emit part filled here
+
+      this.emitTradeEvent(order, tradePrice, tradeQuantity);
 
       if (otherOrder.quantity === 0) {
         this.removeOrderFromBook(otherOrder);
-        // TODO emit order filled and removed event here.
+        this.emitOrderFilledEvent(otherOrder);
       }
     }
 
     if (order.quantity > 0) {
       this.addOrderToBook(order);
-      // TODO emit order placed event here.
+      this.emitOrderOpenedEvent(order);
     }
 
     return order.orderId;
@@ -158,7 +208,7 @@ export class Orderbook {
     const order = this.orders.get(orderId);
     if (order) {
       this.removeOrderFromBook(order);
-      // TODO emit order cancelled event here.
+      this.emitOrderCanceledEvent(order);
       return true;
     }
     throw new Error('Order not found');

@@ -21,6 +21,10 @@ export interface Order {
   quantity: number;
 }
 
+// https://www.npmjs.com/package/heap-js
+// https://www.youtube.com/watch?v=nmYx6tQxtSs
+// https://github.com/haru-exchange/chainlink-demo/issues/4
+
 export class Orderbook {
   public readonly symbol: string;
 

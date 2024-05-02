@@ -10,12 +10,21 @@ export class OrderController {
   @Post('/place')
   place(@Body() request: PlaceOrderDto): Promise<{ orderId: string }> {
     this.logger.log(`placing order`);
-    return this.ordersWorkflow.placeOrder(request);
+    const order = {
+      //orderId: request.orderId,
+      symbol: request.symbol,
+      price: request.price ?? '',
+      quantity: request.quantity,
+      side: request.side,
+      orderType: request.orderType,
+    };
+
+    return this.ordersWorkflow.placeOrder(order);
   }
 
   @Post('/cancel')
   cancel(@Body() request: CancelOrderDto): Promise<{ success: boolean }> {
     this.logger.log(`cancelling order`);
-    return this.ordersWorkflow.cancelOrder(request);
+    return this.ordersWorkflow.cancelOrder(request.orderId, request.symbol);
   }
 }

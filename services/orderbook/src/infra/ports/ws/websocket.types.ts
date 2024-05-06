@@ -39,12 +39,7 @@ export interface WsEvent {
   event: WsEventTypes;
   code?: string; // success = '0', otherwise add code
   msg?: string; // success = 'success', otherwise add message
-  pair?: string[];
+  pairs?: string[];
   subscription?: WsSubscription;
   data?: WsData[];
-}
-
-export interface WsAdapter {
-  subscribe(pair: string[], subscription: WsSubscription): void;
-  unsubscribe(pair: string[], subscription: WsSubscription): void;
 }

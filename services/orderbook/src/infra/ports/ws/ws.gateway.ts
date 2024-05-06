@@ -7,12 +7,12 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
 import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { env } from 'process';
 import { WsEvent } from './websocket.types';
+import { TradeAdapter } from './trade.adapter';
 
 @WebSocketGateway(env.ORDERBOOK_WS_PORT ? +env.ORDERBOOK_WS_PORT : 4002, {
   path: '/',
@@ -31,6 +31,8 @@ export class WsGateway
   logger: Logger = new Logger(WsGateway.name);
   connectedClients: Map<string, Socket> = new Map();
   pongUpdates: Map<string, number> = new Map();
+
+  constructor(private readonly tradeAdapter: TradeAdapter) {}
 
   afterInit() {
     this.logger.log(
@@ -102,7 +104,7 @@ export class WsGateway
   onMessage(
     @MessageBody() data: string,
     @ConnectedSocket() client: Socket,
-  ): WsResponse<string> {
+  ): void {
     const message = JSON.parse(data) as WsEvent;
     if (message.event === 'pong') {
       this.logger.debug(`Pong received from ${client.id}`);
@@ -114,11 +116,68 @@ export class WsGateway
       client.emit('message', JSON.stringify({ event: 'pong' }));
     }
 
-    // validate message structure
-    // pass messages to socket handler
+    if (message.event === 'subscribe') {
+      if (!message.pairs || message.pairs.length === 0) {
+        client.emit('message', {
+          event: 'subscribe',
+          code: '10002',
+          msg: 'pair details required',
+        });
+        return;
+      }
 
-    const event = 'events';
-    const response = `events-xxx`;
-    return { event, data: response };
+      if (!message.subscription || !message.subscription.name) {
+        client.emit('message', {
+          event: 'subscribe',
+          code: '10001',
+          msg: 'subscription details required',
+        });
+        return;
+      }
+
+      this.logger.debug(
+        `Subscription request received from ${client.id} for "${message.subscription.name}"`,
+      );
+
+      if (message.subscription.name === 'trade') {
+        this.tradeAdapter.subscribe(
+          message.pairs,
+          message.subscription,
+          client,
+        );
+      }
+    }
+
+    if (message.event === 'unsubscribe') {
+      if (!message.pairs || message.pairs.length === 0) {
+        client.emit('message', {
+          event: 'unsubscribe',
+          code: '10002',
+          msg: 'pair details required',
+        });
+        return;
+      }
+
+      if (!message.subscription || !message.subscription.name) {
+        client.emit('message', {
+          event: 'unsubscribe',
+          code: '10001',
+          msg: 'subscription details required',
+        });
+        return;
+      }
+
+      this.logger.debug(
+        `Unsubscription request received from ${client.id} for "${message.subscription.name}"`,
+      );
+
+      if (message.subscription.name === 'trade') {
+        this.tradeAdapter.unsubscribe(
+          message.pairs,
+          message.subscription,
+          client.id,
+        );
+      }
+    }
   }
 }

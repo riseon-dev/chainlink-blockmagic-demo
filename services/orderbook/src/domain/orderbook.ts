@@ -2,7 +2,7 @@ import { Heap } from 'heap-js';
 import {
   EventType,
   TradeEvent,
-  Event,
+  DomainEvent,
   OrderFilledEvent,
   OrderOpenedEvent,
   OrderCanceledEvent,
@@ -16,6 +16,7 @@ export enum OrderSide {
 export interface Order {
   orderId: number;
   timestamp: number;
+  symbol: string;
   side: OrderSide;
   price: number;
   quantity: number;
@@ -39,7 +40,7 @@ export class Orderbook {
   constructor(
     public readonly base: string,
     public readonly quote: string,
-    private emitEvent: (eventType: EventType, event: Event) => void,
+    private emitEvent: (eventType: EventType, event: DomainEvent) => void,
   ) {
     this.symbol = `${base}/${quote}`;
     const asksComparator = (a: Order, b: Order) => a.price - b.price;
@@ -94,8 +95,8 @@ export class Orderbook {
     this.emitEvent(
       EventType.TRADE,
       new TradeEvent(
-        order.orderId,
         Date.now(),
+        order.symbol,
         order.side,
         tradePrice,
         tradeQuantity,
@@ -108,6 +109,7 @@ export class Orderbook {
       EventType.ORDER_OPENED,
       new OrderOpenedEvent(
         order.orderId,
+        order.symbol,
         Date.now(),
         order.side,
         order.price,

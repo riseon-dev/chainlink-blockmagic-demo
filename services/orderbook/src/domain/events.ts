@@ -7,17 +7,19 @@ export enum EventType {
   TRADE = 'TRADE',
 }
 
-export interface Event {
-  orderId: number;
+export interface DomainEvent {
+  orderId?: number;
   timestamp: number;
+  symbol?: string;
   side?: OrderSide;
   price?: number;
   quantity?: number;
 }
 
-export class OrderOpenedEvent implements Event {
+export class OrderOpenedEvent implements DomainEvent {
   constructor(
     public readonly orderId: number,
+    public readonly symbol: string,
     public readonly timestamp: number,
     public readonly side: OrderSide,
     public readonly price: number,
@@ -25,24 +27,24 @@ export class OrderOpenedEvent implements Event {
   ) {}
 }
 
-export class OrderCanceledEvent implements Event {
+export class OrderCanceledEvent implements DomainEvent {
   constructor(
     public readonly orderId: number,
     public readonly timestamp: number,
   ) {}
 }
 
-export class OrderFilledEvent implements Event {
+export class OrderFilledEvent implements DomainEvent {
   constructor(
     public readonly orderId: number,
     public readonly timestamp: number,
   ) {}
 }
 
-export class TradeEvent implements Event {
+export class TradeEvent implements DomainEvent {
   constructor(
-    public readonly orderId: number,
     public readonly timestamp: number,
+    public readonly symbol: string,
     public readonly side: OrderSide,
     public readonly price: number,
     public readonly quantity: number,

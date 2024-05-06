@@ -3,7 +3,8 @@ export type WsEventTypes =
   | 'pong'
   | 'heartbeat'
   | 'subscribe'
-  | 'unsubscribe';
+  | 'unsubscribe'
+  | 'trade';
 
 export type WsSubscriptionTypes = 'ohlc' | 'ticker' | 'trade' | '*';
 

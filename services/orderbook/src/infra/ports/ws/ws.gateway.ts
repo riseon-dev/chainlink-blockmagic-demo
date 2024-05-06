@@ -42,7 +42,7 @@ export class WsGateway
     // send heartbeats every 1 sec
     //this.heartbeatInit();
 
-    // send ping every 5 sec
+    // send ping every 1 minute
     //this.pingInit();
   }
 
@@ -65,7 +65,7 @@ export class WsGateway
       this.connectedClients.forEach((client) => {
         client.emit('message', message);
       });
-    }, 15000);
+    }, 60000);
 
     setInterval(() => {
       this.connectedClients.forEach((client) => {

@@ -2,19 +2,27 @@ import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { MarketInfo, MarketSymbols } from '../domain/markets';
 import { OrderId } from '../domain/order-id';
 import { Order, Orderbook, OrderSide } from '../domain/orderbook';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class OrdersWorkfow implements OnModuleInit {
   private logger: Logger = new Logger(OrdersWorkfow.name);
   private orderbooks = new Map<string, Orderbook>();
 
-  constructor() {}
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
   onModuleInit() {
     for (const market of MarketSymbols.values()) {
       const base = market.base;
       const quote = market.quote;
-      this.orderbooks.set(market.symbol, new Orderbook(base, quote, () => {}));
+      this.orderbooks.set(
+        market.symbol,
+        new Orderbook(
+          base,
+          quote,
+          this.eventEmitter.emit.bind(this.eventEmitter),
+        ),
+      );
     }
   }
 
@@ -77,6 +85,7 @@ export class OrdersWorkfow implements OnModuleInit {
 
     const order: Order = {
       orderId,
+      symbol,
       timestamp: Date.now(),
       side: side === 'BUY' ? OrderSide.BUY : OrderSide.SELL,
       price: adjustedPrice,

@@ -6,6 +6,7 @@ export enum EventType {
   ORDER_FILLED = 'ORDER_FILLED',
   TRADE = 'TRADE',
   TICKER = 'TICKER',
+  ORDERBOOK = 'ORDERBOOK',
 }
 
 export interface DomainEvent {
@@ -62,5 +63,14 @@ export class TickerEvent implements DomainEvent {
     public bestAskSize: number,
     public baseVolume: number,
     public quoteVolume: number,
+  ) {}
+}
+
+export class OrderbookEvent implements DomainEvent {
+  constructor(
+    public readonly timestamp: number,
+    public readonly symbol: string,
+    public readonly bids: [number, number][],
+    public readonly asks: [number, number][],
   ) {}
 }

@@ -243,4 +243,12 @@ export class Orderbook {
   getAskVolume(): number {
     return this.asks.toArray().reduce((acc, order) => acc + order.quantity, 0);
   }
+
+  getLevel2Bids(): [number, number][] {
+    return this.bids.toArray().map((order) => [order.price, order.quantity]);
+  }
+
+  getLevel2Asks(): [number, number][] {
+    return this.asks.toArray().map((order) => [order.price, order.quantity]);
+  }
 }

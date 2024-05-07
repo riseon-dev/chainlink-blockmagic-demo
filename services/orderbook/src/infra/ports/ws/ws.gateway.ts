@@ -14,6 +14,7 @@ import { env } from 'process';
 import { WsEvent } from './websocket.types';
 import { TradeAdapter } from './trade.adapter';
 import { TickerAdapter } from './ticker.adapter';
+import { OrderbookAdapter } from './orderbook.adapter';
 
 @WebSocketGateway(env.ORDERBOOK_WS_PORT ? +env.ORDERBOOK_WS_PORT : 4002, {
   path: '/',
@@ -36,6 +37,7 @@ export class WsGateway
   constructor(
     private readonly tradeAdapter: TradeAdapter,
     private readonly tickerAdapter: TickerAdapter,
+    private readonly orderbookAdapter: OrderbookAdapter,
   ) {}
 
   afterInit() {
@@ -158,6 +160,14 @@ export class WsGateway
           client,
         );
       }
+
+      if (message.subscription.name === 'orderbook') {
+        this.orderbookAdapter.subscribe(
+          message.pairs,
+          message.subscription,
+          client,
+        );
+      }
     }
 
     if (message.event === 'unsubscribe') {
@@ -193,6 +203,14 @@ export class WsGateway
 
       if (message.subscription.name === 'ticker') {
         this.tickerAdapter.unsubscribe(
+          message.pairs,
+          message.subscription,
+          client.id,
+        );
+      }
+
+      if (message.subscription.name === 'orderbook') {
+        this.orderbookAdapter.unsubscribe(
           message.pairs,
           message.subscription,
           client.id,

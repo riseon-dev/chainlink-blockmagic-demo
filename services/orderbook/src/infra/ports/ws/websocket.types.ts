@@ -5,9 +5,15 @@ export type WsEventTypes =
   | 'subscribe'
   | 'unsubscribe'
   | 'trade'
-  | 'ticker';
+  | 'ticker'
+  | 'orderbook';
 
-export type WsSubscriptionTypes = 'ohlc' | 'ticker' | 'trade' | '*';
+export type WsSubscriptionTypes =
+  | 'ohlc'
+  | 'ticker'
+  | 'trade'
+  | 'orderbook'
+  | '*';
 
 export interface WsSubscription {
   name: WsSubscriptionTypes;
@@ -40,6 +46,10 @@ export interface WsData {
   tradePrice?: string;
   tradeVolume?: string;
   tradeSide?: string;
+
+  // orderbook (every 100ms)
+  asks?: [string, string][];
+  bids?: [string, string][];
 }
 
 export interface WsEvent {

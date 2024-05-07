@@ -3,6 +3,7 @@ import { MarketInfo, MarketSymbols } from '../domain/markets';
 import { OrderId } from '../domain/order-id';
 import { Order, Orderbook, OrderSide } from '../domain/orderbook';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EventType, TickerEvent } from '../domain/events';
 
 @Injectable()
 export class OrdersWorkfow implements OnModuleInit {
@@ -21,6 +22,29 @@ export class OrdersWorkfow implements OnModuleInit {
           base,
           quote,
           this.eventEmitter.emit.bind(this.eventEmitter),
+        ),
+      );
+    }
+
+    // emit orderbook related events here
+    setInterval(() => {
+      this.emitTickerEvents();
+    }, 200);
+  }
+
+  private emitTickerEvents() {
+    for (const orderbook of this.orderbooks.values()) {
+      this.eventEmitter.emit(
+        EventType.TICKER,
+        new TickerEvent(
+          Date.now(),
+          orderbook.symbol,
+          orderbook.getBestBid()?.price || 0,
+          orderbook.getBestAsk()?.price || 0,
+          orderbook.getBestBid()?.quantity || 0,
+          orderbook.getBestAsk()?.quantity || 0,
+          orderbook.getBidVolume(),
+          orderbook.getAskVolume(),
         ),
       );
     }

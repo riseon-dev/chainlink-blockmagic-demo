@@ -30,9 +30,6 @@ export class TradeAdapter extends WsAdapter implements OnModuleInit {
     const clients = this.pairToClient.get(event.symbol);
     console.log('clients', clients);
     if (!clients) {
-      this.logger.debug(
-        `TradeAdapter:handleTradeEvent: no clients for ${event.symbol}`,
-      );
       return;
     }
 
@@ -52,9 +49,6 @@ export class TradeAdapter extends WsAdapter implements OnModuleInit {
             },
           ],
         };
-        this.logger.debug(
-          `emitting from trade-adapter: ${JSON.stringify(message)}`,
-        );
 
         client.emit('message', JSON.stringify(message));
       }

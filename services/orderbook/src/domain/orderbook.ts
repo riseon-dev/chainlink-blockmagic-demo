@@ -227,4 +227,20 @@ export class Orderbook {
       return this.ask_volume.get(Number(price)) ?? 0;
     }
   }
+
+  getBestBid(): Order | undefined {
+    return this.bids.peek();
+  }
+
+  getBestAsk(): Order | undefined {
+    return this.asks.peek();
+  }
+
+  getBidVolume(): number {
+    return this.bids.toArray().reduce((acc, order) => acc + order.quantity, 0);
+  }
+
+  getAskVolume(): number {
+    return this.asks.toArray().reduce((acc, order) => acc + order.quantity, 0);
+  }
 }

@@ -4,7 +4,8 @@ export type WsEventTypes =
   | 'heartbeat'
   | 'subscribe'
   | 'unsubscribe'
-  | 'trade';
+  | 'trade'
+  | 'ticker';
 
 export type WsSubscriptionTypes = 'ohlc' | 'ticker' | 'trade' | '*';
 
@@ -17,20 +18,25 @@ export interface WsData {
   symbol: string;
   ts: number;
   type: 'update' | 'snapshot';
-  // ticker
+
+  // ticker (every 100ms)
   bestBid?: string;
   bestAsk?: string;
   bestBidSize?: string;
   bestAskSize?: string;
   baseVolume?: string;
   quoteVolume?: string;
+  lastTradedPrice?: string;
+  lastTradedSize?: string;
+
   // ohlc
   open?: string;
   high?: string;
   low?: string;
   close?: string;
   volume?: string;
-  // trade
+
+  // trade (when a trade happens)
   tradePrice?: string;
   tradeVolume?: string;
   tradeSide?: string;

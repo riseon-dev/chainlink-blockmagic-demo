@@ -13,6 +13,7 @@ import { Server, Socket } from 'socket.io';
 import { env } from 'process';
 import { WsEvent } from './websocket.types';
 import { TradeAdapter } from './trade.adapter';
+import { TickerAdapter } from './ticker.adapter';
 
 @WebSocketGateway(env.ORDERBOOK_WS_PORT ? +env.ORDERBOOK_WS_PORT : 4002, {
   path: '/',
@@ -32,14 +33,17 @@ export class WsGateway
   connectedClients: Map<string, Socket> = new Map();
   pongUpdates: Map<string, number> = new Map();
 
-  constructor(private readonly tradeAdapter: TradeAdapter) {}
+  constructor(
+    private readonly tradeAdapter: TradeAdapter,
+    private readonly tickerAdapter: TickerAdapter,
+  ) {}
 
   afterInit() {
     this.logger.log(
       `Starting socket.io server [port: ${env.ORDERBOOK_WS_PORT}]...`,
     );
 
-    // send heartbeats every 1 sec
+    // send heartbeats every 10 sec
     //this.heartbeatInit();
 
     // send ping every 1 minute
@@ -54,7 +58,7 @@ export class WsGateway
       this.connectedClients.forEach((client) => {
         client.emit('message', message);
       });
-    }, 1000);
+    }, 10000);
   }
 
   pingInit() {
@@ -70,11 +74,11 @@ export class WsGateway
     setInterval(() => {
       this.connectedClients.forEach((client) => {
         const lastPong = this.pongUpdates.get(client.id) ?? 0;
-        if (Date.now() - lastPong > 20000) {
+        if (Date.now() - lastPong > 30000) {
           client.disconnect();
         }
       });
-    }, 20000);
+    }, 90000);
   }
 
   handleConnection(client: Socket) {
@@ -146,6 +150,14 @@ export class WsGateway
           client,
         );
       }
+
+      if (message.subscription.name === 'ticker') {
+        this.tickerAdapter.subscribe(
+          message.pairs,
+          message.subscription,
+          client,
+        );
+      }
     }
 
     if (message.event === 'unsubscribe') {
@@ -173,6 +185,14 @@ export class WsGateway
 
       if (message.subscription.name === 'trade') {
         this.tradeAdapter.unsubscribe(
+          message.pairs,
+          message.subscription,
+          client.id,
+        );
+      }
+
+      if (message.subscription.name === 'ticker') {
+        this.tickerAdapter.unsubscribe(
           message.pairs,
           message.subscription,
           client.id,

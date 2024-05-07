@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { WebControllersModule } from './infra/ports/web/web-controllers.module';
+import { WsModule } from './infra/ports/ws/ws.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [EventEmitterModule.forRoot(), WebControllersModule, WsModule],
+  providers: [],
+  controllers: [],
 })
-export class AppModule {}
+export class AppWithoutConfigModule {}

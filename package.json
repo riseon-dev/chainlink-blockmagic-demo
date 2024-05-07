@@ -3,20 +3,35 @@
   "version": "1.0.0",
   "description": "Haru repository for Chainlink demo",
   "scripts": {
-    "test": "echo \"Hello World\""
+    "build": "turbo build",
+    "start": "turbo start",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "test:cov": "turbo test:cov",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "Abdulla Faraz",
   "license": "GPL-3.0",
   "devDependencies": {
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
     "turbo": "1.13.3"
+  },
+  "lint-staged": {
+    "*.{js, jsx,ts,tsx}": [
+      "eslint \"**/*.ts\" --fix"
+    ]
   },
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
   },
-  "contributors": [{
-    "name": "Abdulla Faraz",
-    "email": "abdulla.faraz@gmail.com"
-  }]
+  "contributors": [
+    {
+      "name": "Abdulla Faraz",
+      "email": "abdulla.faraz@gmail.com"
+    }
+  ]
 }

@@ -5,8 +5,9 @@
   "author": "Abdulla Faraz <abdulla.faraz@gmail.com>",
   "private": true,
   "license": "GPL-3.0",
-  "type": "module",
-  "main": "src/index.ts",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",

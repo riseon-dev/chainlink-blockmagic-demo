@@ -1,4 +1,4 @@
-export type WsEventTypes =
+export type OrderbookWsEventTypes =
   | 'ping'
   | 'pong'
   | 'heartbeat'
@@ -8,19 +8,19 @@ export type WsEventTypes =
   | 'ticker'
   | 'orderbook';
 
-export type WsSubscriptionTypes =
+export type OrderbookWsSubscriptionTypes =
   | 'ohlc'
   | 'ticker'
   | 'trade'
   | 'orderbook'
   | '*';
 
-export interface WsSubscription {
-  name: WsSubscriptionTypes;
+export interface OrderbookWsSubscription {
+  name: OrderbookWsSubscriptionTypes;
   interval?: number[]; // for ohlc subscription 1|5|15|30|60|240|1440|10080|21600
 }
 
-export interface WsData {
+export interface OrderbookWsData {
   symbol: string;
   ts: number;
   type: 'update' | 'snapshot';
@@ -52,11 +52,11 @@ export interface WsData {
   bids?: [string, string][];
 }
 
-export interface WsEvent {
-  event: WsEventTypes;
+export interface OrderbookWsEvent {
+  event: OrderbookWsEventTypes;
   code?: string; // success = '0', otherwise add code
   msg?: string; // success = 'success', otherwise add message
   pairs?: string[];
-  subscription?: WsSubscription;
-  data?: WsData[];
+  subscription?: OrderbookWsSubscription;
+  data?: OrderbookWsData[];
 }

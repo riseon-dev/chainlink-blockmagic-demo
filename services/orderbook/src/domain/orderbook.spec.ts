@@ -7,12 +7,14 @@ const createOrder = ({
   side = OrderSide.BUY,
   price = 100,
   quantity = 10,
+  symbol = 'WBTC/USDT',
 }: {
   orderId?: number;
   timestamp?: number;
   side?: OrderSide;
   price?: number;
   quantity?: number;
+  symbol?: string;
 }) => {
   return {
     orderId,
@@ -20,6 +22,7 @@ const createOrder = ({
     side,
     price,
     quantity,
+    symbol,
   };
 };
 

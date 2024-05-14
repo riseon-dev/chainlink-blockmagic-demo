@@ -5,13 +5,13 @@ import { theme } from './theme.ts';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* The rest of your application */}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {/* The rest of your application */}
 
-      <Orderbook />
-      <PlaceOrderWidget />
-    </ThemeProvider>
+        <Orderbook />
+        <PlaceOrderWidget />
+      </ThemeProvider>
   )
 }
 

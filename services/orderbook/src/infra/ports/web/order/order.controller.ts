@@ -1,6 +1,9 @@
 import { Body, Controller, Logger, Post } from '@nestjs/common';
 import { OrdersWorkfow } from '../../../../application/orders.workfow';
-import { CancelOrderDto, PlaceOrderDto } from './order.dto';
+import {
+  OrderbookPlaceOrderDto,
+  OrderbookCancelOrderDto,
+} from '@haru/shared-interfaces';
 
 @Controller('order')
 export class OrderController {
@@ -8,7 +11,7 @@ export class OrderController {
   constructor(private readonly ordersWorkflow: OrdersWorkfow) {}
 
   @Post('/place')
-  place(@Body() request: PlaceOrderDto): Promise<{ orderId: string }> {
+  place(@Body() request: OrderbookPlaceOrderDto): Promise<{ orderId: string }> {
     this.logger.log(`placing order`);
     const order = {
       //orderId: request.orderId,
@@ -23,7 +26,9 @@ export class OrderController {
   }
 
   @Post('/cancel')
-  cancel(@Body() request: CancelOrderDto): Promise<{ success: boolean }> {
+  cancel(
+    @Body() request: OrderbookCancelOrderDto,
+  ): Promise<{ success: boolean }> {
     this.logger.log(`cancelling order`);
     return this.ordersWorkflow.cancelOrder(request.orderId, request.symbol);
   }

@@ -20,6 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
+    "@haru/shared-interfaces": "workspace:*",
     "@grpc/grpc-js": "1.10.7",
     "@nestjs/common": "10.3.8",
     "@nestjs/config": "3.2.2",

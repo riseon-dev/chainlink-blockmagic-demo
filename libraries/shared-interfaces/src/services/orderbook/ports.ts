@@ -1,6 +1,6 @@
 import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class PlaceOrderDto {
+export class OrderbookPlaceOrderDto {
   @IsString()
   @IsNotEmpty()
   symbol: string;
@@ -24,7 +24,7 @@ export class PlaceOrderDto {
   price?: string;
 }
 
-export class CancelOrderDto {
+export class OrderbookCancelOrderDto {
   @IsNotEmpty()
   @IsString()
   orderId: string;

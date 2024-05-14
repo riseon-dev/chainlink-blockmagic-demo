@@ -22,7 +22,8 @@ import { OrderbookAdapter } from './orderbook.adapter';
   cors: {
     origin: '*',
   },
-  transports: ['websocket'],
+  allowEIO3: true,
+  transports: ['websocket', 'polling'],
 })
 export class WsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect

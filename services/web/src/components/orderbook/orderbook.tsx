@@ -1,13 +1,20 @@
-//import React from 'react';
-//import { useBoundStore } from '../../stores/store.ts';
+import React from 'react';
+import { useBoundStore } from '../../stores/store.ts';
 
 const Orderbook = () => {
-  //const bears = useBoundStore((state) => state.bears);
-  //const increase = useBoundStore((state) => state.increase);
+  const connect = useBoundStore((state) => state.connect);
+  const orderbook = useBoundStore((state) => state.orderbook);
+
+  React.useEffect(() => {
+    console.log('calling connect');
+    connect();
+  }, []);
 
   return (
     <div>
       Orderbook
+      asks: {JSON.stringify(orderbook.asks)}
+      bids: {JSON.stringify(orderbook.bids)}
     </div>
   );
 };

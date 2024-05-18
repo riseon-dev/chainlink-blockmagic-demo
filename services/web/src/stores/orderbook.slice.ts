@@ -31,13 +31,23 @@ export const createOrderbookSlice: StateCreator<
 
       socket.send(JSON.stringify(subscriptionMessage));
     });
+
     socket.on('message', (event: string) => {
       const message = JSON.parse(event) as OrderbookWsEvent;
       console.log(`socket.io message: ${JSON.stringify(message)}`);
       console.log(message.data);
 
-      message?.data?.forEach((data) => {
-        if (data.type === 'update') {
+      message?.data?.forEach((_data) => {
+        const { asks, bids } = _data;
+        const filteredAsks = asks ? sumVolumeByPrice(asks).slice(0, 15) : []; // TODO combine volume by price
+        const filteredBids = bids ? sumVolumeByPrice(bids).slice(0, 15) : []; // TODO combine volume by price
+
+        const data = {
+          ..._data,
+          asks: filteredAsks,
+          bids: filteredBids,
+        }
+        if (_data.type === 'update') {
           set({ orderbook: data });
         }
       });
@@ -54,3 +64,18 @@ export const createOrderbookSlice: StateCreator<
     bids: [],
   }
 });
+
+
+const sumVolumeByPrice = (data: [string, string][]): [string, string][] => {
+  const arr: [string, string][] = [];
+  for (const [price, volume] of data) {
+    const existing = arr.find(([p]) => p === price);
+
+    if (existing) {
+      existing[1] = (+(existing[1]) + +(volume)).toFixed(4);
+    } else {
+      arr.push([price, volume]);
+    }
+  }
+  return arr;
+}

@@ -24,6 +24,13 @@ export class OrderbookAdapter extends WsAdapter implements OnModuleInit {
     clients.forEach((clientId) => {
       const client = this.clientList.get(clientId);
       if (client) {
+        const asks: [string, string][] = event.asks
+          .slice(0, 50)
+          .map((value) => [value[0].toString(), value[1].toString()]);
+        const bids: [string, string][] = event.bids
+          .slice(0, 50)
+          .map((value) => [value[0].toString(), value[1].toString()]);
+
         const message: OrderbookWsEvent = {
           event: 'orderbook',
           data: [
@@ -31,14 +38,8 @@ export class OrderbookAdapter extends WsAdapter implements OnModuleInit {
               symbol: event.symbol || '',
               ts: event.timestamp,
               type: 'update',
-              asks: event.asks.map((value) => [
-                value[0].toString(),
-                value[1].toString(),
-              ]),
-              bids: event.bids.map((value) => [
-                value[0].toString(),
-                value[1].toString(),
-              ]),
+              asks,
+              bids,
             },
           ],
         };

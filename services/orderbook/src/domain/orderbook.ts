@@ -7,6 +7,7 @@ import {
   OrderOpenedEvent,
   OrderCanceledEvent,
 } from './events';
+import { MarketSymbols, MarketUtils } from './markets';
 
 export enum OrderSide {
   BUY = 'BUY',
@@ -92,15 +93,17 @@ export class Orderbook {
     tradePrice: number,
     tradeQuantity: number,
   ): void {
+    const market = MarketSymbols.get(order.symbol);
+    if (!market) throw new Error('Market not found');
+    const [price, quantity] = MarketUtils.convertFromOrderbookPrecision(
+      market,
+      tradePrice,
+      tradeQuantity,
+    );
+
     this.emitEvent(
       EventType.TRADE,
-      new TradeEvent(
-        Date.now(),
-        order.symbol,
-        order.side,
-        tradePrice,
-        tradeQuantity,
-      ),
+      new TradeEvent(Date.now(), order.symbol, order.side, price, quantity),
     );
   }
 

@@ -1,5 +1,5 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { MarketInfo, MarketSymbols } from '../domain/markets';
+import { MarketInfo, MarketSymbols, MarketUtils } from '../domain/markets';
 import { OrderId } from '../domain/order-id';
 import { Order, Orderbook, OrderSide } from '../domain/orderbook';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -37,15 +37,43 @@ export class OrdersWorkfow implements OnModuleInit {
   }
 
   private emitOrderbookEvents() {
+    const convertOrderbookPriceAndQuantity = (
+      bidOrAsk: [number, number],
+      symbol: string,
+    ) => {
+      const market = MarketSymbols.get(symbol);
+      if (!market) throw new Error('Market not found');
+      const [price, quantity] = MarketUtils.convertFromOrderbookPrecision(
+        market,
+        bidOrAsk[0],
+        bidOrAsk[1],
+      );
+      return [price, quantity];
+    };
+
     for (const orderbook of this.orderbooks.values()) {
+      const bids: [number, number][] = orderbook
+        .getLevel2Bids()
+        .map((bid: [number, number]) => {
+          const [price, quantity] = convertOrderbookPriceAndQuantity(
+            bid,
+            orderbook.symbol,
+          );
+          return [price, quantity];
+        });
+      const asks: [number, number][] = orderbook
+        .getLevel2Asks()
+        .map((ask: [number, number]) => {
+          const [price, quantity] = convertOrderbookPriceAndQuantity(
+            ask,
+            orderbook.symbol,
+          );
+          return [price, quantity];
+        });
+
       this.eventEmitter.emit(
         EventType.ORDERBOOK,
-        new OrderbookEvent(
-          Date.now(),
-          orderbook.symbol,
-          orderbook.getLevel2Bids(),
-          orderbook.getLevel2Asks(),
-        ),
+        new OrderbookEvent(Date.now(), orderbook.symbol, bids, asks),
       );
     }
   }
@@ -120,10 +148,9 @@ export class OrdersWorkfow implements OnModuleInit {
     this.validateOrder({ price, quantity, market });
 
     const orderId = OrderId.generate();
-    const basePrecision = 10 ** market.basePrecision;
-    const quotePrecision = 10 ** market.quotePrecision;
-    const adjustedPrice = Math.round(+price * quotePrecision);
-    const adjustedQuantity = Math.round(+quantity * basePrecision);
+
+    const [adjustedPrice, adjustedQuantity] =
+      MarketUtils.convertToOrderbookPrecision(market, +price, +quantity);
 
     const order: Order = {
       orderId,

@@ -28,7 +28,6 @@ export class TradeAdapter extends WsAdapter implements OnModuleInit {
     }
 
     const clients = this.pairToClient.get(event.symbol);
-    console.log('clients', clients);
     if (!clients) {
       return;
     }

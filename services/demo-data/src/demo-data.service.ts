@@ -69,7 +69,7 @@ export class DemoDataService {
   async orderProcessor(update: OrderbookUpdate) {
     try {
       if (update.a) {
-        console.log(`Asks: `); // sell
+        // asks (sell side)
         for (const ask of update.a) {
           const [_price, _volume] = ask;
           const price = Number(_price).toFixed(4);
@@ -80,7 +80,7 @@ export class DemoDataService {
         }
       }
       if (update.b) {
-        console.log(`Bids: `); // buy
+        // bids (buy side)
         for (const bid of update.b) {
           const [_price, _volume] = bid;
           const price = Number(_price).toFixed(4);

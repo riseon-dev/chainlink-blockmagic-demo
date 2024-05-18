@@ -33,3 +33,9 @@ export class OrderbookCancelOrderDto {
   @IsString()
   symbol: string;
 }
+
+export class OrderbookPlaceOrderResponse {
+  @IsNotEmpty()
+  @IsString()
+  orderId: string;
+}

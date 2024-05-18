@@ -3,6 +3,7 @@ import { OrdersWorkfow } from '../../../../application/orders.workfow';
 import {
   OrderbookPlaceOrderDto,
   OrderbookCancelOrderDto,
+  OrderbookPlaceOrderResponse,
 } from '@haru/shared-interfaces';
 
 @Controller('order')
@@ -10,9 +11,10 @@ export class OrderController {
   private logger: Logger = new Logger(OrderController.name);
   constructor(private readonly ordersWorkflow: OrdersWorkfow) {}
 
-  @Post('/place')
-  place(@Body() request: OrderbookPlaceOrderDto): Promise<{ orderId: string }> {
-    this.logger.log(`placing order`);
+  @Post('place')
+  place(
+    @Body() request: OrderbookPlaceOrderDto,
+  ): Promise<OrderbookPlaceOrderResponse> {
     const order = {
       //orderId: request.orderId,
       symbol: request.symbol,

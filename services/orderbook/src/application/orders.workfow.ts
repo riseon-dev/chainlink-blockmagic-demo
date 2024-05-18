@@ -122,8 +122,8 @@ export class OrdersWorkfow implements OnModuleInit {
     const orderId = OrderId.generate();
     const basePrecision = 10 ** market.basePrecision;
     const quotePrecision = 10 ** market.quotePrecision;
-    const adjustedPrice = +price * quotePrecision;
-    const adjustedQuantity = +quantity * basePrecision;
+    const adjustedPrice = Math.round(+price * quotePrecision);
+    const adjustedQuantity = Math.round(+quantity * basePrecision);
 
     const order: Order = {
       orderId,

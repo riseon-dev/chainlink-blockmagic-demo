@@ -27,29 +27,6 @@ const Orderbook = () => {
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
         <div>
           <Typography variant="h4" gutterBottom>
-            Asks
-          </Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orderbook?.asks?.map((row) => (
-                  <TableRow>
-                    <TableCell align="right">{row[0]}</TableCell>
-                    <TableCell align="right">{row[1]}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-        <div>
-          <Typography variant="h4" gutterBottom>
             Bids
           </Typography>
           <TableContainer component={Paper}>
@@ -62,6 +39,29 @@ const Orderbook = () => {
               </TableHead>
               <TableBody>
                 {orderbook?.bids?.map((row) => (
+                  <TableRow>
+                    <TableCell align="right">{row[0]}</TableCell>
+                    <TableCell align="right">{row[1]}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+        <div>
+          <Typography variant="h4" gutterBottom>
+            Asks
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="right">Price</TableCell>
+                  <TableCell align="right">Quantity</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orderbook?.asks?.map((row) => (
                   <TableRow>
                     <TableCell align="right">{row[0]}</TableCell>
                     <TableCell align="right">{row[1]}</TableCell>

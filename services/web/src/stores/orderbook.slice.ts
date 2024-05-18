@@ -34,13 +34,11 @@ export const createOrderbookSlice: StateCreator<
 
     socket.on('message', (event: string) => {
       const message = JSON.parse(event) as OrderbookWsEvent;
-      console.log(`socket.io message: ${JSON.stringify(message)}`);
-      console.log(message.data);
 
       message?.data?.forEach((_data) => {
         const { asks, bids } = _data;
-        const filteredAsks = asks ? sumVolumeByPrice(asks).slice(0, 15) : []; // TODO combine volume by price
-        const filteredBids = bids ? sumVolumeByPrice(bids).slice(0, 15) : []; // TODO combine volume by price
+        const filteredAsks = asks ? sumVolumeByPrice(asks).slice(0, 15) : [];
+        const filteredBids = bids ? sumVolumeByPrice(bids, true).slice(0, 15) : [];
 
         const data = {
           ..._data,
@@ -66,7 +64,8 @@ export const createOrderbookSlice: StateCreator<
 });
 
 
-const sumVolumeByPrice = (data: [string, string][]): [string, string][] => {
+const sumVolumeByPrice = (data: [string, string][], reverse= true): [string, string][] => {
+
   const arr: [string, string][] = [];
   for (const [price, volume] of data) {
     const existing = arr.find(([p]) => p === price);
@@ -77,5 +76,5 @@ const sumVolumeByPrice = (data: [string, string][]): [string, string][] => {
       arr.push([price, volume]);
     }
   }
-  return arr;
+  return arr.sort((a, b) => reverse ? parseFloat(a[0]) - parseFloat(b[0]) : parseFloat(b[0]) - parseFloat(a[0]));
 }

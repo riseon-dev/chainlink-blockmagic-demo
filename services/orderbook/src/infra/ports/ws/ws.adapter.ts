@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { WsSubscription } from './websocket.types';
+import { OrderbookWsSubscription } from '@haru/shared-interfaces';
 import { Logger } from '@nestjs/common';
 
 export abstract class WsAdapter {
@@ -11,7 +11,7 @@ export abstract class WsAdapter {
 
   subscribe(
     pairs: string[],
-    subscription: WsSubscription,
+    subscription: OrderbookWsSubscription,
     client: Socket,
   ): void {
     this.clientList.set(client.id, client);
@@ -35,7 +35,7 @@ export abstract class WsAdapter {
 
   unsubscribe(
     pairs: string[],
-    subscription: WsSubscription,
+    subscription: OrderbookWsSubscription,
     clientId: string,
   ): void {
     pairs.forEach((pair) => {

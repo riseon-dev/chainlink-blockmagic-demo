@@ -2,7 +2,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { WsAdapter } from './ws.adapter';
 import { OnEvent } from '@nestjs/event-emitter';
 import { DomainEvent, EventType } from '../../../domain/events';
-import { WsEvent } from './websocket.types';
+import { OrderbookWsEvent } from '@haru/shared-interfaces';
 
 @Injectable()
 export class TradeAdapter extends WsAdapter implements OnModuleInit {
@@ -28,7 +28,6 @@ export class TradeAdapter extends WsAdapter implements OnModuleInit {
     }
 
     const clients = this.pairToClient.get(event.symbol);
-    console.log('clients', clients);
     if (!clients) {
       return;
     }
@@ -36,7 +35,7 @@ export class TradeAdapter extends WsAdapter implements OnModuleInit {
     clients.forEach((clientId) => {
       const client = this.clientList.get(clientId);
       if (client) {
-        const message: WsEvent = {
+        const message: OrderbookWsEvent = {
           event: 'trade',
           data: [
             {

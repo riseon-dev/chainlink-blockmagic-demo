@@ -7,6 +7,7 @@ import {
   OrderOpenedEvent,
   OrderCanceledEvent,
 } from './events';
+import { MarketSymbols, MarketUtils } from './markets';
 
 export enum OrderSide {
   BUY = 'BUY',
@@ -92,15 +93,17 @@ export class Orderbook {
     tradePrice: number,
     tradeQuantity: number,
   ): void {
+    const market = MarketSymbols.get(order.symbol);
+    if (!market) throw new Error('Market not found');
+    const [price, quantity] = MarketUtils.convertFromOrderbookPrecision(
+      market,
+      tradePrice,
+      tradeQuantity,
+    );
+
     this.emitEvent(
       EventType.TRADE,
-      new TradeEvent(
-        Date.now(),
-        order.symbol,
-        order.side,
-        tradePrice,
-        tradeQuantity,
-      ),
+      new TradeEvent(Date.now(), order.symbol, order.side, price, quantity),
     );
   }
 
@@ -245,10 +248,18 @@ export class Orderbook {
   }
 
   getLevel2Bids(): [number, number][] {
-    return this.bids.toArray().map((order) => [order.price, order.quantity]);
+    const bids: [number, number][] = this.bids
+      .toArray()
+      .map((order): [number, number] => [order.price, order.quantity])
+      .sort((a: [number, number], b: [number, number]) => b[0] - a[0]);
+    return bids;
   }
 
   getLevel2Asks(): [number, number][] {
-    return this.asks.toArray().map((order) => [order.price, order.quantity]);
+    const asks: [number, number][] = this.asks
+      .toArray()
+      .map((order): [number, number] => [order.price, order.quantity])
+      .sort((a: [number, number], b: [number, number]) => a[0] - b[0]);
+    return asks;
   }
 }

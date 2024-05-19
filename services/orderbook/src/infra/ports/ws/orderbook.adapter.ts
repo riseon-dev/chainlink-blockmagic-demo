@@ -2,7 +2,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { WsAdapter } from './ws.adapter';
 import { OnEvent } from '@nestjs/event-emitter';
 import { EventType, OrderbookEvent } from '../../../domain/events';
-import { WsEvent } from './websocket.types';
+import { OrderbookWsEvent } from '@haru/shared-interfaces';
 
 @Injectable()
 export class OrderbookAdapter extends WsAdapter implements OnModuleInit {
@@ -24,21 +24,24 @@ export class OrderbookAdapter extends WsAdapter implements OnModuleInit {
     clients.forEach((clientId) => {
       const client = this.clientList.get(clientId);
       if (client) {
-        const message: WsEvent = {
+        const asks: [string, string][] = event.asks.map((value) => [
+          value[0].toString(),
+          value[1].toString(),
+        ]);
+        const bids: [string, string][] = event.bids.map((value) => [
+          value[0].toString(),
+          value[1].toString(),
+        ]);
+
+        const message: OrderbookWsEvent = {
           event: 'orderbook',
           data: [
             {
               symbol: event.symbol || '',
               ts: event.timestamp,
               type: 'update',
-              asks: event.asks.map((value) => [
-                value[0].toString(),
-                value[1].toString(),
-              ]),
-              bids: event.bids.map((value) => [
-                value[0].toString(),
-                value[1].toString(),
-              ]),
+              asks,
+              bids,
             },
           ],
         };

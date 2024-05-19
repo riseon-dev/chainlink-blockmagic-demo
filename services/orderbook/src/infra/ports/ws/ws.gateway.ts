@@ -11,7 +11,7 @@ import {
 import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { env } from 'process';
-import { WsEvent } from './websocket.types';
+import { OrderbookWsEvent } from '@haru/shared-interfaces';
 import { TradeAdapter } from './trade.adapter';
 import { TickerAdapter } from './ticker.adapter';
 import { OrderbookAdapter } from './orderbook.adapter';
@@ -22,7 +22,8 @@ import { OrderbookAdapter } from './orderbook.adapter';
   cors: {
     origin: '*',
   },
-  transports: ['websocket'],
+  allowEIO3: true,
+  transports: ['websocket', 'polling'],
 })
 export class WsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
@@ -111,7 +112,7 @@ export class WsGateway
     @MessageBody() data: string,
     @ConnectedSocket() client: Socket,
   ): void {
-    const message = JSON.parse(data) as WsEvent;
+    const message = JSON.parse(data) as OrderbookWsEvent;
     if (message.event === 'pong') {
       this.logger.debug(`Pong received from ${client.id}`);
       this.pongUpdates.set(client.id, Date.now());

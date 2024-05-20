@@ -5,7 +5,7 @@
   "scripts": {
     "build": "turbo build",
     "start": "turbo start",
-    "dev": "turbo dev",
+    "dev": "eval export $(cat .env.example) && turbo dev",
     "lint": "turbo lint",
     "test": "turbo test",
     "test:cov": "turbo test:cov",

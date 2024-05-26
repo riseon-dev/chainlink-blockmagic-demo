@@ -15,6 +15,13 @@
       "cache": false,
       "persistent": true
     },
+    "compile": {
+      "dependsOn": ["^compile","build", "topo"]
+    },
+    "deploy": {
+      "dependsOn": ["compile"]
+    },
+    "format": {},
     "lint": {},
     "test": {},
     "test:cov": {}

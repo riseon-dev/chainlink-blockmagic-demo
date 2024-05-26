@@ -46,6 +46,7 @@ const config: HardhatUserConfig = {
     settings: {
       // find all available options in the official documentation
       // https://era.zksync.io/docs/tools/hardhat/hardhat-zksync-solc.html#configuration
+      isSystem: true,
     },
   },
   solidity: {

@@ -148,3 +148,6 @@ build
 
 # vercel
 .vercel
+
+# IDEA files
+.idea

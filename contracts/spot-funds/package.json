@@ -2,7 +2,7 @@
   "name": "spot-funds",
   "description": "Contracts to manage spot funds",
   "private": true,
-  "author": "Abdulla Faraz",
+  "author": "Abdulla Faraz <abdulla.faraz@gmail.com>",
   "license": "GPL-3.0",
   "repository": "https://github.com/matter-labs/zksync-hardhat-template.git",
   "scripts": {
@@ -19,7 +19,7 @@
     "@matterlabs/hardhat-zksync": "1.0.0",
     "@matterlabs/zksync-contracts": "0.6.1",
     "@nomiclabs/hardhat-etherscan": "3.1.8",
-    "@openzeppelin/contracts": "4.6.0",
+    "@openzeppelin/contracts": "4.9.5",
     "@types/chai": "4.3.16",
     "@types/mocha": "10.0.6",
     "@typescript-eslint/eslint-plugin": "6.0.0",

@@ -25,10 +25,7 @@ contract GeneralPaymaster is IPaymaster, Ownable {
     ) external payable onlyBootloader returns (bytes4 magic, bytes memory context) {
         // By default we consider the transaction as accepted.
         magic = PAYMASTER_VALIDATION_SUCCESS_MAGIC;
-        require(
-            _transaction.paymasterInput.length >= 4,
-            "The standard paymaster input must be at least 4 bytes long"
-        );
+        require(_transaction.paymasterInput.length >= 4, "The standard paymaster input must be at least 4 bytes long");
 
         bytes4 paymasterInputSelector = bytes4(_transaction.paymasterInput[0:4]);
         if (paymasterInputSelector == IPaymasterFlow.general.selector) {
@@ -38,10 +35,7 @@ contract GeneralPaymaster is IPaymaster, Ownable {
 
             // The bootloader never returns any data, so it can safely be ignored here.
             (bool success, ) = payable(BOOTLOADER_FORMAL_ADDRESS).call{ value: requiredETH }("");
-            require(
-                success,
-                "Failed to transfer tx fee to the Bootloader. Paymaster balance might not be enough."
-            );
+            require(success, "Failed to transfer tx fee to the Bootloader. Paymaster balance might not be enough.");
         } else {
             revert("Unsupported paymaster flow in paymasterParams.");
         }

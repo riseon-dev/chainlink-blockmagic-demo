@@ -22,10 +22,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        uses: actions/checkout@v4
+        name: Checkout project
+        with:
+          fetch-depth: 2
+      -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile
           target: web
           push: true
           tags: web:latest
@@ -34,6 +40,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile
           target: orderbook
           push: true
           tags: orderbook:latest
@@ -42,6 +49,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile
           target: auth
           push: true
           tags: auth:latest

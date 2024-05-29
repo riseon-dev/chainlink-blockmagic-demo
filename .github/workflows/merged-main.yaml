@@ -34,7 +34,7 @@ jobs:
           file: Dockerfile
           target: web
           push: true
-          tags: web:latest
+          tags: n3m6/web:latest
       -
         name: Build and push
         uses: docker/build-push-action@v5
@@ -43,7 +43,7 @@ jobs:
           file: Dockerfile
           target: orderbook
           push: true
-          tags: orderbook:latest
+          tags: n3m6/orderbook:latest
       -
         name: Build and push
         uses: docker/build-push-action@v5
@@ -52,4 +52,5 @@ jobs:
           file: Dockerfile
           target: auth
           push: true
-          tags: auth:latest
+          tags: n3m6/auth:latest
+

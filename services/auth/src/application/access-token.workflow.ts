@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { NonceRepository } from 'src/domain/repository/nonce.repository';
+import { NonceRepository } from '../domain/repository/nonce.repository';
 import { recoverMessageAddress, Signature } from 'viem';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AccessTokenWorkflow {
   constructor(
-    @Inject() private readonly nonceRepository: NonceRepository,
+    @Inject(NonceRepository) private readonly nonceRepository: NonceRepository,
     private jwtService: JwtService,
   ) {}
 

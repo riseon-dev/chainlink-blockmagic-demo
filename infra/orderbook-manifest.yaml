@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderbook-deployment
+  labels:
+    app: orderbook-deployment
+spec:
+  selector:
+    matchLabels:
+      app: orderbook-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: orderbook-app
+    spec:
+      containers:
+        - name: auth
+          image: n3m6/orderbook:latest
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderbook-service
+  labels:
+    app: orderbook-service
+spec:
+  selector:
+    app: orderbook-app
+  type: LoadBalancer
+  ipFamilies:
+    - IPv4
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 4000
+    - protocol: TCP
+      port: 8082
+      targetPort: 4002
+

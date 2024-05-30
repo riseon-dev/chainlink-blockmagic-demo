@@ -6,7 +6,6 @@ export type Trade = {
   tradeId: number;
   timestamp: number;
   symbol: string;
-  side: string;
   price: number;
   quantity: number;
 };
@@ -29,7 +28,6 @@ export class TradeLogWorkflow {
       tradeId: this.getTradeId(),
       timestamp: event.timestamp,
       symbol: event.symbol,
-      side: event.side,
       price: event.price,
       quantity: event.quantity,
     });

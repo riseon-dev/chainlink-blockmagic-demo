@@ -17,6 +17,8 @@ spec:
       containers:
         - name: web
           image: n3m6/web:latest
+          ports:
+            - containerPort: 8080
           resources:
             limits:
               cpu: 500m
@@ -38,4 +40,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3000
+      targetPort: 8080

@@ -36,9 +36,8 @@ EXPOSE 4000
 EXPOSE 4002
 CMD [ "pnpm", "start:prod" ]
 
-FROM builder as web 
-COPY --from=builder /prod/web /prod/web
-WORKDIR /prod/web
-EXPOSE 3000
-CMD [ "pnpm", "start:prod" ]
-
+FROM nginx:stable as web
+COPY --from=builder /prod/web /usr/share/nginx/html
+RUN ls -la /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

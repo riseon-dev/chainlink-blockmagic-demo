@@ -15,8 +15,24 @@ spec:
         app: orderbook-app
     spec:
       containers:
-        - name: auth
+        - name: orderbook
           image: n3m6/orderbook:latest
+          env:
+            - name: ORDERBOOK_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: haru-envs
+                  key: ORDERBOOK_PORT
+            - name: ORDERBOOK_GRPC_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: haru-envs
+                  key: ORDERBOOK_GRPC_PORT
+            - name: ORDERBOOK_WS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: haru-envs
+                  key: ORDERBOOK_WS_PORT
           resources:
             limits:
               cpu: 500m

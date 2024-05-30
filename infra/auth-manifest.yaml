@@ -17,6 +17,17 @@ spec:
       containers:
         - name: auth
           image: n3m6/auth:latest
+          env:
+            - name: AUTH_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: haru-envs
+                  key: AUTH_PORT
+            - name: AUTH_JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: haru-envs
+                  key: AUTH_JWT_SECRET
           resources:
             limits:
               cpu: 500m
@@ -37,5 +48,5 @@ spec:
     - IPv4
   ports:
     - protocol: TCP
-      port: 8080
+      port: 8083
       targetPort: 5000

@@ -27,18 +27,18 @@ FROM builder as auth
 COPY --from=builder /prod/auth /prod/auth
 WORKDIR /prod/auth
 EXPOSE 5000
-CMD [ "pnpm", "start" ]
+CMD [ "pnpm", "start:prod" ]
 
 FROM builder as orderbook
 COPY --from=builder /prod/orderbook /prod/orderbook
 WORKDIR /prod/orderbook
 EXPOSE 4000
 EXPOSE 4002
-CMD [ "pnpm", "start" ]
+CMD [ "pnpm", "start:prod" ]
 
 FROM builder as web 
 COPY --from=builder /prod/web /prod/web
 WORKDIR /prod/web
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "pnpm", "start:prod" ]
 

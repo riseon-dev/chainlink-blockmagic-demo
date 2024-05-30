@@ -17,6 +17,11 @@ spec:
       containers:
         - name: auth
           image: n3m6/auth:latest
+          env:
+            - name: AUTH_PORT
+              value: $AUTH_PORT
+            - name: AUTH_JWT_SECRET
+              value: $AUTH_JWT_SECRET
           resources:
             limits:
               cpu: 500m

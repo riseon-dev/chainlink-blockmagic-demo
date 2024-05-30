@@ -17,6 +17,13 @@ spec:
       containers:
         - name: auth
           image: n3m6/orderbook:latest
+          env:
+            - name: ORDERBOOK_PORT
+              value: $ORDERBOOK_PORT
+            - name: ORDERBOOK_GRPC_PORT
+              value: $ORDERBOOK_GRPC_PORT
+            - name: ORDERBOOK_WS_PORT
+              value: $ORDERBOOK_WS_PORT
           resources:
             limits:
               cpu: 500m

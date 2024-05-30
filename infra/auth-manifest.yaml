@@ -17,6 +17,7 @@ spec:
       containers:
         - name: auth
           image: n3m6/auth:latest
+          imagePullPolicy: Always
           env:
             - name: AUTH_PORT
               valueFrom:
@@ -30,7 +31,7 @@ spec:
                   key: AUTH_JWT_SECRET
           resources:
             limits:
-              cpu: 500m
+              cpu: 250m
               memory: 500Mi
       restartPolicy: Always
 ---

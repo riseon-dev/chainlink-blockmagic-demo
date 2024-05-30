@@ -17,11 +17,12 @@ spec:
       containers:
         - name: web
           image: n3m6/web:latest
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           resources:
             limits:
-              cpu: 500m
+              cpu: 250m
               memory: 500Mi
       restartPolicy: Always
 ---
@@ -40,4 +41,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 80

@@ -17,6 +17,7 @@ spec:
       containers:
         - name: orderbook
           image: n3m6/orderbook:latest
+          imagePullPolicy: Always
           env:
             - name: ORDERBOOK_PORT
               valueFrom:
@@ -35,7 +36,7 @@ spec:
                   key: ORDERBOOK_WS_PORT
           resources:
             limits:
-              cpu: 500m
+              cpu: 250m
               memory: 500Mi
       restartPolicy: Always
 ---

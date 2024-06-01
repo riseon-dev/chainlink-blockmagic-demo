@@ -15,15 +15,17 @@
     "@emotion/styled": "11.11.5",
     "@fontsource/roboto": "5.0.13",
     "@mui/icons-material": "5.15.17",
+    "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "5.15.17",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "socket.io-client": "4.7.5",
+    "viem": "2.11.0",
     "zustand": "4.5.2"
   },
   "devDependencies": {
-    "@haru/ui": "workspace:*",
     "@haru/shared-interfaces": "workspace:*",
+    "@haru/ui": "workspace:*",
     "@types/react": "18.2.66",
     "@types/react-dom": "18.2.22",
     "@typescript-eslint/eslint-plugin": "7.2.0",

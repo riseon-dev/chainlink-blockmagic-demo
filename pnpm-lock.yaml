@@ -517,6 +517,9 @@ importers:
       '@mui/icons-material':
         specifier: 5.15.17
         version: 5.15.17(@mui/material@5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.66)(react@18.2.0)
+      '@mui/lab':
+        specifier: 5.0.0-alpha.170
+        version: 5.0.0-alpha.170(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@mui/material@5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mui/material':
         specifier: 5.15.17
         version: 5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -529,6 +532,9 @@ importers:
       socket.io-client:
         specifier: 4.7.5
         version: 4.7.5
+      viem:
+        specifier: 2.11.0
+        version: 2.11.0(typescript@5.4.5)
       zustand:
         specifier: 4.5.2
         version: 4.5.2(@types/react@18.2.66)(immer@10.0.2)(react@18.2.0)
@@ -1317,6 +1323,24 @@ packages:
       '@types/react':
         optional: true
 
+  '@mui/lab@5.0.0-alpha.170':
+    resolution: {integrity: sha512-0bDVECGmrNjd3+bLdcLiwYZ0O4HP5j5WSQm5DV6iA/Z9kr8O6AnvZ1bv9ImQbbX7Gj3pX4o43EKwCutj3EQxQg==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@emotion/react': ^11.5.0
+      '@emotion/styled': ^11.3.0
+      '@mui/material': '>=5.15.0'
+      '@types/react': ^17.0.0 || ^18.0.0
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+      '@types/react':
+        optional: true
+
   '@mui/material@5.15.17':
     resolution: {integrity: sha512-ru/MLvTkCh0AZXmqwIpqGTOoVBS/sX48zArXq/DvktxXZx4fskiRA2PEc7Rk5ZlFiZhKh4moL4an+l8zZwq49Q==}
     engines: {node: '>=12.0.0'}
@@ -1727,9 +1751,6 @@ packages:
 
   '@openzeppelin/contracts@4.9.5':
     resolution: {integrity: sha512-ZK+W5mVhRppff9BE6YdR8CC52C8zAvsVAiWhEtQ5+oNxFE6h1WdeWo+FJSF8KKvtxxVYZ7MTP/5KoVpAU3aSWg==}
-
-  '@openzeppelin/contracts@4.9.6':
-    resolution: {integrity: sha512-xSmezSupL+y9VkHZJGDoCBpmnB2ogM13ccaYDWqJTfS3dbuHkgjuwDFUmaFauBCboQMGB/S5UqUl2y54X99BmA==}
 
   '@openzeppelin/upgrades-core@1.33.1':
     resolution: {integrity: sha512-YRxIRhTY1b+j7+NUUu8Uuem5ugxKexEMVd8dBRWNgWeoN1gS1OCrhgUg0ytL+54vzQ+SGWZDfNnzjVuI1Cj1Zw==}
@@ -6825,7 +6846,7 @@ snapshots:
       '@ethersproject/address': 5.7.0
       '@matterlabs/hardhat-zksync-solc': 1.1.4(hardhat@2.22.4(ts-node@10.9.2(@types/node@20.12.9)(typescript@5.4.5))(typescript@5.4.5))
       '@nomicfoundation/hardhat-verify': 2.0.7(hardhat@2.22.4(ts-node@10.9.2(@types/node@20.12.9)(typescript@5.4.5))(typescript@5.4.5))
-      '@openzeppelin/contracts': 4.9.6
+      '@openzeppelin/contracts': 4.9.5
       axios: 1.6.8(debug@4.3.4)
       cbor: 8.1.0
       chai: 4.4.1
@@ -6906,6 +6927,23 @@ snapshots:
       '@mui/material': 5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
     optionalDependencies:
+      '@types/react': 18.2.66
+
+  '@mui/lab@5.0.0-alpha.170(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@mui/material@5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@babel/runtime': 7.24.5
+      '@mui/base': 5.0.0-beta.40(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@mui/material': 5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@mui/system': 5.15.15(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0)
+      '@mui/types': 7.2.14(@types/react@18.2.66)
+      '@mui/utils': 5.15.14(@types/react@18.2.66)(react@18.2.0)
+      clsx: 2.1.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    optionalDependencies:
+      '@emotion/react': 11.11.4(@types/react@18.2.66)(react@18.2.0)
+      '@emotion/styled': 11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0)
       '@types/react': 18.2.66
 
   '@mui/material@5.15.17(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react@18.2.0))(@types/react@18.2.66)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -7326,8 +7364,6 @@ snapshots:
   '@openzeppelin/contracts-upgradeable@4.9.6': {}
 
   '@openzeppelin/contracts@4.9.5': {}
-
-  '@openzeppelin/contracts@4.9.6': {}
 
   '@openzeppelin/upgrades-core@1.33.1':
     dependencies:

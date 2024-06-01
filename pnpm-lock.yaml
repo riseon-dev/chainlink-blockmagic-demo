@@ -529,6 +529,9 @@ importers:
       socket.io-client:
         specifier: 4.7.5
         version: 4.7.5
+      viem:
+        specifier: 2.11.0
+        version: 2.11.0(typescript@5.4.5)
       zustand:
         specifier: 4.5.2
         version: 4.5.2(@types/react@18.2.66)(immer@10.0.2)(react@18.2.0)
@@ -1727,9 +1730,6 @@ packages:
 
   '@openzeppelin/contracts@4.9.5':
     resolution: {integrity: sha512-ZK+W5mVhRppff9BE6YdR8CC52C8zAvsVAiWhEtQ5+oNxFE6h1WdeWo+FJSF8KKvtxxVYZ7MTP/5KoVpAU3aSWg==}
-
-  '@openzeppelin/contracts@4.9.6':
-    resolution: {integrity: sha512-xSmezSupL+y9VkHZJGDoCBpmnB2ogM13ccaYDWqJTfS3dbuHkgjuwDFUmaFauBCboQMGB/S5UqUl2y54X99BmA==}
 
   '@openzeppelin/upgrades-core@1.33.1':
     resolution: {integrity: sha512-YRxIRhTY1b+j7+NUUu8Uuem5ugxKexEMVd8dBRWNgWeoN1gS1OCrhgUg0ytL+54vzQ+SGWZDfNnzjVuI1Cj1Zw==}
@@ -6825,7 +6825,7 @@ snapshots:
       '@ethersproject/address': 5.7.0
       '@matterlabs/hardhat-zksync-solc': 1.1.4(hardhat@2.22.4(ts-node@10.9.2(@types/node@20.12.9)(typescript@5.4.5))(typescript@5.4.5))
       '@nomicfoundation/hardhat-verify': 2.0.7(hardhat@2.22.4(ts-node@10.9.2(@types/node@20.12.9)(typescript@5.4.5))(typescript@5.4.5))
-      '@openzeppelin/contracts': 4.9.6
+      '@openzeppelin/contracts': 4.9.5
       axios: 1.6.8(debug@4.3.4)
       cbor: 8.1.0
       chai: 4.4.1
@@ -7326,8 +7326,6 @@ snapshots:
   '@openzeppelin/contracts-upgradeable@4.9.6': {}
 
   '@openzeppelin/contracts@4.9.5': {}
-
-  '@openzeppelin/contracts@4.9.6': {}
 
   '@openzeppelin/upgrades-core@1.33.1':
     dependencies:

@@ -2,10 +2,10 @@ import { StateCreator } from 'zustand'
 import { OrderbookWsData, OrderbookWsEvent } from '@haru/shared-interfaces';
 import { io } from "socket.io-client";
 
-const ORDERBOOK_HOST = import.meta.env.VITE_APP_ORDERBOOK_URL;
+const ORDERBOOK_HOST = import.meta.env.VITE_APP_ORDERBOOK_URL || process.env.VITE_APP_ORDERBOOK_URL;
 
 export interface OrderbookSlice {
-  connect: () => void;
+  connectOrderbook: () => void;
   orderbook: Pick<OrderbookWsData, 'asks' | 'bids'>;
 }
 
@@ -15,9 +15,8 @@ export const createOrderbookSlice: StateCreator<
   [],
   OrderbookSlice
 > = (set) => ({
-  connect: () => {
-    console.log('inside connection function');
-    const socket = io(ORDERBOOK_HOST); // FIXME
+  connectOrderbook: () => {
+    const socket = io(ORDERBOOK_HOST);
 
     socket.on('connect', () => {
       console.log('socket.io connected');

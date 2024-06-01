@@ -14,7 +14,7 @@ import {
 
 
 const Orderbook = () => {
-  const connect = useBoundStore((state) => state.connect);
+  const connect = useBoundStore((state) => state.connectOrderbook);
   const orderbook = useBoundStore((state) => state.orderbook);
 
   React.useEffect(() => {

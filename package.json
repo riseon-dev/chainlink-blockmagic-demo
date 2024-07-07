@@ -33,5 +33,6 @@
       "name": "Abdulla Faraz",
       "email": "abdulla.faraz@gmail.com"
     }
-  ]
+  ],
+  "packageManager": "pnpm@9.4.0"
 }

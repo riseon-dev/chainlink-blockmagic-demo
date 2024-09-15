@@ -1,4 +1,4 @@
-# Monorepo for Chainlink Demo
+# Monorepo for Riseon MVP
 
 ![quick-sketch](./docs/haru-exchange-initial.png)
 

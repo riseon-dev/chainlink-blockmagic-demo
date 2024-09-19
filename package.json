@@ -1,7 +1,7 @@
 {
-  "name": "chainlink-demo",
+  "name": "riseon-dev",
   "version": "1.0.0",
-  "description": "Haru repository for Chainlink demo",
+  "description": "Riseon Monorepo",
   "scripts": {
     "build": "turbo build",
     "start": "turbo start",
